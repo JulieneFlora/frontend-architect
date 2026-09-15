@@ -2,73 +2,84 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+/*
+  Direção visual: janela de app / editor de código, no espírito macOS.
+  As três bolinhas (vermelha/amarela/verde) do WindowFrame são a assinatura
+  visual do produto — aparecem em todo painel de conteúdo relevante.
+*/
+
 :root {
-  --bg: #faf9f6;
+  --bg: #f2f2f5;
   --panel: #ffffff;
-  --panel-strong: #f2f0ea;
-  --border: #e6e2d8;
-  --fg: #201d18;
-  --fg-muted: #5c574d;
-  --fg-subtle: #948e80;
+  --panel-strong: #f4f4f7;
+  --border: #e1e1e8;
+  --fg: #17171b;
+  --fg-muted: #56565f;
+  --fg-subtle: #8a8a94;
 
-  --primary: #315efb;
-  --primary-medium: #6f8ffc;
-  --primary-light: #e1e8ff;
+  --primary: #6d4aff;
+  --primary-medium: #5738e0;
+  --primary-light: #ece6ff;
 
-  --warning: #b6740a;
-  --warning-medium: #dd9a1f;
-  --warning-light: #fbecc9;
+  --warning: #a8690a;
+  --warning-medium: #c9871f;
+  --warning-light: #fcefd2;
 
-  --error: #d33a4b;
-  --error-medium: #e8697a;
-  --error-light: #fbdde1;
+  --error: #d8483f;
+  --error-medium: #e0655c;
+  --error-light: #fbe1df;
 
-  --success: #1c8a5b;
-  --success-medium: #3fac7c;
-  --success-light: #d7f0e2;
+  --success: #1f9a3f;
+  --success-medium: #37b859;
+  --success-light: #dcf3e2;
 
-  --highlight-orange: #f2762e;
-  --highlight-yellow: #f0b429;
-  --highlight-pink: #e6488f;
+  --highlight-orange: #e8722e;
+  --highlight-teal: #0d9c97;
+  --highlight-pink: #dd5091;
 
-  --shadow-color: 32 25% 15%;
+  --traffic-red: #ff5f57;
+  --traffic-yellow: #febc2e;
+  --traffic-green: #28c840;
 }
 
 .dark {
-  --bg: #17161c;
-  --panel: #201f27;
-  --panel-strong: #262530;
-  --border: #34333f;
-  --fg: #f3f1ec;
-  --fg-muted: #ada7b8;
-  --fg-subtle: #726d7d;
+  --bg: #0b0b0e;
+  --panel: #18181d;
+  --panel-strong: #1f1f26;
+  --border: #2b2b33;
+  --fg: #f2f2f5;
+  --fg-muted: #a9a9b4;
+  --fg-subtle: #6d6d78;
 
-  --primary: #7c9bff;
-  --primary-medium: #4f74f3;
-  --primary-light: #232a4a;
+  --primary: #9a8cff;
+  --primary-medium: #7c6aff;
+  --primary-light: #241f3d;
 
-  --warning: #f0b429;
-  --warning-medium: #c98d1c;
-  --warning-light: #3a2f14;
+  --warning: #febc2e;
+  --warning-medium: #c99423;
+  --warning-light: #3a2e10;
 
-  --error: #f2707f;
-  --error-medium: #dd4f60;
-  --error-light: #3a1e22;
+  --error: #ff6f66;
+  --error-medium: #dd5348;
+  --error-light: #3a1712;
 
-  --success: #4ecf99;
-  --success-medium: #2fa374;
-  --success-light: #16302a;
+  --success: #3ee06a;
+  --success-medium: #28b84e;
+  --success-light: #0f2e18;
 
   --highlight-orange: #ff8a4c;
-  --highlight-yellow: #ffd166;
-  --highlight-pink: #ff6bad;
+  --highlight-teal: #2dd4bf;
+  --highlight-pink: #ff6fa5;
 
-  --shadow-color: 250 40% 3%;
+  --traffic-red: #ff5f57;
+  --traffic-yellow: #febc2e;
+  --traffic-green: #28c840;
 }
 
 @theme inline {
   --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
   --font-display: 'Space Grotesk', 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
   --color-bg: var(--bg);
   --color-panel: var(--panel);
@@ -95,8 +106,12 @@
   --color-success-light: var(--success-light);
 
   --color-highlight-orange: var(--highlight-orange);
-  --color-highlight-yellow: var(--highlight-yellow);
+  --color-highlight-teal: var(--highlight-teal);
   --color-highlight-pink: var(--highlight-pink);
+
+  --color-traffic-red: var(--traffic-red);
+  --color-traffic-yellow: var(--traffic-yellow);
+  --color-traffic-green: var(--traffic-green);
 }
 
 :root {
@@ -104,6 +119,9 @@
   color: var(--fg);
   background: var(--bg);
   font-synthesis: none;
+  cursor:
+    url('/cursors/cursor-default.svg') 5 4,
+    auto;
 }
 * {
   box-sizing: border-box;
@@ -118,10 +136,53 @@ button,
 input {
   font: inherit;
 }
-button {
-  cursor: pointer;
+a,
+button,
+[role='button'],
+input,
+select,
+summary,
+label {
+  cursor:
+    url('/cursors/cursor-pointer.svg') 5 4,
+    pointer;
 }
 a {
   color: inherit;
   text-decoration: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+@keyframes graph-float {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(6px, -9px);
+  }
+  50% {
+    transform: translate(-4px, 5px);
+  }
+  75% {
+    transform: translate(-8px, -4px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+.graph-float {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation-name: graph-float;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
 }

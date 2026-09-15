@@ -1,6 +1,8 @@
 import { useState } from 'react'
-import { Check, ChevronLeft, ChevronRight, Copy, RotateCcw } from 'lucide-react'
+import { Check, ChevronLeft, Copy, RotateCcw } from 'lucide-react'
 import { icons3d } from '../../assets/icons-3d'
+import { PathLabel } from '../../components/ui/PathLabel'
+import { WindowFrame } from '../../components/ui/WindowFrame'
 import { ArchitectureDiagram } from './ArchitectureDiagram'
 import { defaults, options, type ArchitectureChoices, type ChoiceKey } from './domain'
 import { generateRecommendation } from './recommendationEngine'
@@ -36,7 +38,7 @@ export function BuilderPage() {
             type="button"
             aria-pressed={choices[key] === value}
             onClick={() => setChoices({ ...choices, [key]: value } as ArchitectureChoices)}
-            className={`rounded-lg border px-3 py-2 text-sm transition ${choices[key] === value ? 'border-primary bg-primary-light text-primary' : 'border-border bg-panel text-fg-muted hover:border-primary/50'}`}
+            className={`rounded-md border px-3 py-2 text-sm transition ${choices[key] === value ? 'border-primary bg-primary-light text-primary' : 'border-border bg-panel text-fg-muted hover:border-primary/50'}`}
             key={value}
           >
             {value}
@@ -52,18 +54,16 @@ export function BuilderPage() {
           <div className="flex items-start gap-4">
             <img src={icons3d.rocket} alt="" className="h-14 w-14 shrink-0" />
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[.2em] text-fg-subtle">
-                Arquitetura gerada
-              </p>
+              <PathLabel segments={['recomendador', 'resultado']} />
               <h1 className="mt-2 font-display text-3xl font-bold text-fg">{result.title}</h1>
               <p className="mt-2 max-w-2xl text-fg-muted">{result.summary}</p>
             </div>
           </div>
           <button
             onClick={() => setStep(0)}
-            className="inline-flex items-center gap-2 rounded-lg border border-border px-3 py-2 text-sm text-fg-muted hover:text-fg"
+            className="inline-flex items-center gap-2 rounded-md border border-border px-3 py-2 text-sm text-fg-muted hover:text-fg"
           >
-            <RotateCcw size={15} /> Revisar escolhas
+            <RotateCcw size={15} /> revisar escolhas
           </button>
         </div>
         <div className="mb-6 flex flex-wrap gap-2">
@@ -78,7 +78,7 @@ export function BuilderPage() {
         </div>
         <ArchitectureDiagram modules={result.modules} />
         <div className="mt-6 grid gap-6 lg:grid-cols-2">
-          <section className="rounded-2xl border border-border bg-panel p-6">
+          <WindowFrame title="estrutura.txt">
             <div className="flex items-center justify-between">
               <h2 className="font-semibold text-fg">Estrutura sugerida</h2>
               <button
@@ -90,16 +90,16 @@ export function BuilderPage() {
                 className="inline-flex items-center gap-2 text-xs text-fg-muted hover:text-fg"
               >
                 <Copy size={14} />
-                {copied ? 'Copiado' : 'Copiar'}
+                {copied ? 'copiado' : 'copiar'}
               </button>
             </div>
-            <pre className="mt-4 overflow-auto rounded-lg bg-panel-strong p-4 text-xs leading-6 text-fg-muted">
+            <pre className="mt-4 overflow-auto rounded-lg bg-panel-strong p-4 font-mono text-xs leading-6 text-fg-muted">
               {result.tree.join('\n')}
             </pre>
-          </section>
-          <section className="rounded-2xl border border-border bg-panel p-6">
+          </WindowFrame>
+          <WindowFrame title="versoes.json">
             <h2 className="font-semibold text-fg">Versões para esta recomendação</h2>
-            <ul className="mt-4 space-y-2 text-sm text-fg-muted">
+            <ul className="mt-4 space-y-2 font-mono text-sm text-fg-muted">
               {result.versions.map((version) => (
                 <li key={version} className="flex gap-2">
                   <Check size={16} className="mt-0.5 text-success" />
@@ -107,20 +107,20 @@ export function BuilderPage() {
                 </li>
               ))}
             </ul>
-          </section>
+          </WindowFrame>
         </div>
         <section className="mt-6">
           <h2 className="mb-4 font-display text-xl font-semibold text-fg">Decisões e trade-offs</h2>
           <div className="grid gap-4 md:grid-cols-2">
             {result.reasons.map((reason) => (
-              <article key={reason.title} className="rounded-xl border border-border bg-panel p-5">
+              <WindowFrame key={reason.title} as="article" contentClassName="p-5">
                 <h3 className="font-semibold text-fg">{reason.title}</h3>
                 <p className="mt-2 text-sm leading-6 text-fg-muted">{reason.body}</p>
                 <p className="mt-4 border-l-2 border-warning pl-3 text-xs leading-5 text-warning">
                   <strong>Trade-off: </strong>
                   {reason.tradeoff}
                 </p>
-              </article>
+              </WindowFrame>
             ))}
           </div>
         </section>
@@ -128,15 +128,15 @@ export function BuilderPage() {
     )
   return (
     <div className="mx-auto max-w-3xl px-5 py-12">
-      <p className="text-xs font-semibold uppercase tracking-[.2em] text-fg-subtle">Criar arquitetura</p>
+      <PathLabel segments={['recomendador', step === 0 ? 'contexto' : 'tecnologias']} />
       <h1 className="mt-2 font-display text-3xl font-bold text-fg">{steps[step].title}</h1>
       <p className="mt-2 text-fg-muted">
-        Etapa {step + 1} de 2 · Suas escolhas alimentam regras de recomendação testáveis.
+        Etapa {step + 1} de 2. Suas escolhas alimentam regras de recomendação testáveis.
       </p>
-      <div className="mt-8 h-1 overflow-hidden rounded bg-border">
+      <div className="mt-8 h-1 overflow-hidden rounded-full bg-border">
         <div className="h-full bg-primary transition-all" style={{ width: `${(step + 1) * 50}%` }} />
       </div>
-      <section className="mt-8 rounded-2xl border border-border bg-panel p-6">
+      <WindowFrame as="section" title="recomendador.tsx" className="mt-8">
         {steps[step].fields.map(field)}
         <div className="mt-8 flex justify-between border-t border-border pt-5">
           <button
@@ -144,17 +144,16 @@ export function BuilderPage() {
             onClick={() => setStep(step - 1)}
             className="inline-flex items-center gap-2 text-sm text-fg-muted disabled:opacity-30"
           >
-            <ChevronLeft size={16} /> Voltar
+            <ChevronLeft size={16} /> voltar
           </button>
           <button
             onClick={() => setStep(step + 1)}
-            className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-medium"
+            className="inline-flex items-center gap-2 rounded-md bg-primary px-4 py-2 text-sm font-semibold text-white hover:bg-primary-medium"
           >
-            {step === 1 ? 'Gerar arquitetura' : 'Continuar'}
-            <ChevronRight size={16} />
+            {step === 1 ? 'gerar arquitetura' : 'continuar'}
           </button>
         </div>
-      </section>
+      </WindowFrame>
     </div>
   )
 }

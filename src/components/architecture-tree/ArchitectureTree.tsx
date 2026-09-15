@@ -1,6 +1,7 @@
 import { ChevronDown, ChevronRight, FileCode2, Folder, FolderOpen, Info, type LucideIcon } from 'lucide-react'
 import { useState } from 'react'
 import type { ModuleInfo } from '../../features/architecture/domain'
+import { WindowFrame } from '../ui/WindowFrame'
 
 export type TreeNode = {
   id: string
@@ -43,34 +44,23 @@ export function ArchitectureTree({
 
   return (
     <section className="grid gap-5 xl:grid-cols-[minmax(0,1.25fr)_minmax(320px,.75fr)]">
-      <div className="overflow-hidden rounded-xl border border-[#34333f] bg-[#1c1b22]">
-        <header className="flex items-center justify-between border-b border-[#2c2b36] bg-[#242330] px-5 py-4">
-          <div>
-            <p className="text-xs font-medium uppercase tracking-[.16em] text-[#8b8697]">
-              Estrutura recomendada
-            </p>
-            <h3 className="mt-1 text-base font-semibold text-white">Navegador de arquitetura</h3>
-          </div>
-          <span className="text-xs text-[#8b8697]">Pastas abertas por padrão</span>
-        </header>
-        <div className="p-4 sm:p-6">
-          <div className="rounded-lg border border-[#2c2b36] bg-[#131218] p-4 font-mono text-[13px] leading-7 text-[#d8d5e0]">
-            <TreeBranch
-              nodes={[tree]}
-              level={0}
-              expanded={expanded}
-              onToggle={toggle}
-              onSelect={select}
-              selected={selected.label}
-            />
-          </div>
-          <p className="mt-4 flex items-start gap-2 text-xs leading-5 text-[#8b8697]">
-            <Info size={15} className="mt-0.5 shrink-0 text-[#8b8697]" />
-            Clique em uma pasta para entender sua responsabilidade. Use a seta para expandir ou recolher o
-            conteúdo.
-          </p>
+      <WindowFrame title="navegador de arquitetura">
+        <div className="rounded-lg border border-[#26262e] bg-[#0b0b0e] p-4 font-mono text-[13px] leading-7 text-[#d6d6dd]">
+          <TreeBranch
+            nodes={[tree]}
+            level={0}
+            expanded={expanded}
+            onToggle={toggle}
+            onSelect={select}
+            selected={selected.label}
+          />
         </div>
-      </div>
+        <p className="mt-4 flex items-start gap-2 text-xs leading-5 text-fg-subtle">
+          <Info size={15} className="mt-0.5 shrink-0 text-fg-subtle" />
+          Clique em uma pasta para entender sua responsabilidade. Use a seta para expandir ou recolher o
+          conteúdo.
+        </p>
+      </WindowFrame>
       <ArchitectureInspector selected={selected} />
     </section>
   )
@@ -108,39 +98,46 @@ function TreeBranch({
   return (
     <ul
       role={level === 0 ? 'tree' : 'group'}
-      className={level > 0 ? 'ml-5 border-l border-[#2c2b36] pl-3' : ''}
+      className={level > 0 ? 'ml-5 border-l border-[#26262e] pl-3' : ''}
     >
       {nodes.map((node) => {
         const isFolder = node.kind === 'folder' || node.name.endsWith('/')
         const isOpen = expanded[node.id]
-        const isSelected = selected === node.name
+        const isSelected = isFolder && selected === node.name
         return (
           <li key={node.id}>
             <div
-              className={`flex min-h-8 items-center gap-1 rounded px-1 transition ${isSelected ? 'bg-primary/25 text-white' : 'text-[#d8d5e0] hover:bg-white/5'}`}
+              className={`flex min-h-8 items-center gap-1 rounded-md px-1 transition ${isSelected ? 'bg-[#9a8cff]/20 text-white' : isFolder ? 'text-[#d6d6dd] hover:bg-white/5' : 'text-[#75757f]'}`}
             >
               <button
                 type="button"
                 onClick={() => isFolder && onToggle(node.id)}
                 aria-label={isFolder ? `${isOpen ? 'Recolher' : 'Expandir'} ${node.name}` : undefined}
-                className="grid h-6 w-5 place-items-center text-[#8b8697] disabled:opacity-0"
+                className="grid h-6 w-5 place-items-center text-[#75757f] disabled:opacity-0"
                 disabled={!isFolder}
               >
                 {isFolder && (isOpen ? <ChevronDown size={14} /> : <ChevronRight size={14} />)}
               </button>
-              <button
-                type="button"
-                onClick={() => onSelect(node)}
-                className="flex flex-1 items-center gap-2 py-1 text-left"
-              >
-                <TreeIcon folder={isFolder} open={isOpen} />
-                <span>{node.name}</span>
-                {node.moduleId && (
-                  <span className="ml-auto hidden font-sans text-[10px] text-[#8b8697] sm:inline">
-                    {node.moduleId}
-                  </span>
-                )}
-              </button>
+              {isFolder ? (
+                <button
+                  type="button"
+                  onClick={() => onSelect(node)}
+                  className="flex flex-1 items-center gap-2 py-1 text-left"
+                >
+                  <TreeIcon folder open={isOpen} />
+                  <span>{node.name}</span>
+                  {node.moduleId && (
+                    <span className="ml-auto hidden text-[10px] text-[#75757f] sm:inline">
+                      {node.moduleId}
+                    </span>
+                  )}
+                </button>
+              ) : (
+                <span className="flex flex-1 cursor-default items-center gap-2 py-1">
+                  <TreeIcon folder={false} />
+                  <span>{node.name}</span>
+                </span>
+              )}
             </div>
             {isFolder && isOpen && node.children && (
               <TreeBranch
@@ -163,7 +160,7 @@ function TreeIcon({ folder, open }: { folder: boolean; open?: boolean }) {
   return (
     <Icon
       size={15}
-      className={folder ? 'shrink-0 text-highlight-yellow' : 'shrink-0 text-[#8b8697]'}
+      className={folder ? 'shrink-0 text-highlight-orange' : 'shrink-0 text-[#75757f]'}
       aria-hidden="true"
     />
   )
@@ -172,9 +169,10 @@ function TreeIcon({ folder, open }: { folder: boolean; open?: boolean }) {
 function ArchitectureInspector({ selected }: { selected: SelectedNode }) {
   const module = selected.module
   return (
-    <aside aria-live="polite" className="rounded-xl border border-border bg-panel p-5 sm:p-6">
-      <p className="text-xs font-medium uppercase tracking-[.16em] text-fg-subtle">Sobre este item</p>
-      <h3 className="mt-2 break-all font-mono text-lg font-semibold text-fg">{selected.label}</h3>
+    <WindowFrame as="aside" title="inspector">
+      <p aria-live="polite" className="break-all font-mono text-lg font-semibold text-fg">
+        {selected.label}
+      </p>
       <p className="mt-4 text-sm leading-6 text-fg-muted">{module?.responsibility ?? selected.description}</p>
       {module ? (
         <>
@@ -188,11 +186,11 @@ function ArchitectureInspector({ selected }: { selected: SelectedNode }) {
         </>
       ) : (
         <div className="mt-6 border-t border-border pt-5">
-          <p className="text-xs font-medium uppercase tracking-[.16em] text-fg-subtle">Papel na estrutura</p>
+          <p className="text-sm font-semibold text-fg">Papel na estrutura</p>
           <p className="mt-2 text-sm leading-6 text-fg-muted">{selected.description}</p>
         </div>
       )}
-    </aside>
+    </WindowFrame>
   )
 }
 function InspectorSection({
@@ -208,7 +206,7 @@ function InspectorSection({
     <section className="mt-6">
       <div className="flex items-center gap-2">
         <Icon size={15} className="text-fg-subtle" />
-        <h4 className="text-xs font-medium uppercase tracking-[.14em] text-fg-subtle">{title}</h4>
+        <h4 className="text-sm font-semibold text-fg">{title}</h4>
       </div>
       <ul className="mt-3 space-y-2">
         {items.map((item) => (

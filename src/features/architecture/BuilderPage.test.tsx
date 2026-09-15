@@ -8,7 +8,7 @@ describe('BuilderPage', () => {
     render(<BuilderPage />)
     await user.click(screen.getByRole('button', { name: /continuar/i }))
     await user.click(screen.getByRole('button', { name: /gerar arquitetura/i }))
-    expect(screen.getByText(/arquitetura gerada/i)).toBeInTheDocument()
+    expect(screen.getByText('resultado')).toBeInTheDocument()
     expect(screen.getByText(/estrutura sugerida/i)).toBeInTheDocument()
   })
 })

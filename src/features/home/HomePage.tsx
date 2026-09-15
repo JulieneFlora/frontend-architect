@@ -1,121 +1,101 @@
-import { ArrowRight, BookOpen, Library, Sparkles } from 'lucide-react'
+import { Compass, Library, Sparkles } from 'lucide-react'
 import { Link } from 'react-router'
-import { icons3d } from '../../assets/icons-3d'
+import { CardLink } from '../../components/ui/CardLink'
+import { PathLabel } from '../../components/ui/PathLabel'
+import { Reveal } from '../../components/ui/Reveal'
+import { WindowFrame } from '../../components/ui/WindowFrame'
 import { architecturePatterns } from '../library/domain'
 import { patternIcons } from '../library/patternIcons'
-
-const features = [
-  {
-    icon: icons3d.barChart,
-    title: 'Escolhas com contexto',
-    text: 'Tecnologias são avaliadas pelo tipo de produto e não por moda.',
-  },
-  {
-    icon: icons3d.puzzlePiece,
-    title: 'Regras isoladas',
-    text: 'O motor de recomendação evolui sem espalhar condicionais na UI.',
-  },
-  {
-    icon: icons3d.books,
-    title: 'Trade-offs explícitos',
-    text: 'Recomendação, alternativa e limite de cada escolha no mesmo lugar.',
-  },
-]
+import { NodeGraph } from './NodeGraph'
 
 export function HomePage() {
   return (
     <div className="mx-auto max-w-7xl px-5">
-      <section className="grid min-h-[70vh] items-center gap-12 py-16 lg:grid-cols-[1.1fr_.9fr]">
-        <div>
-          <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-border bg-panel py-1 pr-3 pl-2 text-xs font-semibold text-primary">
-            <img src={icons3d.sparkles} alt="" className="h-5 w-5" />
-            Decisões técnicas com contexto
-          </p>
-          <h1 className="max-w-3xl font-display text-4xl font-bold tracking-tight text-fg sm:text-6xl">
-            Projete um frontend que <span className="text-primary">continua claro</span> quando cresce.
+      <section className="relative min-h-[62vh] overflow-hidden py-16 lg:py-24">
+        <NodeGraph />
+        <div className="via-bg/95 absolute inset-0 bg-gradient-to-r from-bg to-transparent lg:w-2/3" />
+        <div className="relative">
+          <h1 className="max-w-lg font-display text-4xl font-bold tracking-tight text-fg">
+            Projete um frontend que <span className="text-primary">continua claro</span>.
           </h1>
-          <p className="mt-6 max-w-xl text-lg leading-8 text-fg-muted">
-            Duas formas de evoluir: use o recomendador para ver qual arquitetura se encaixa no seu projeto, ou
-            explore a biblioteca para estudar como diferentes padrões funcionam.
-          </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Link
               to="/builder"
-              className="inline-flex items-center gap-2 rounded-xl bg-primary px-5 py-3 font-semibold text-white shadow-sm shadow-primary/20 hover:bg-primary-medium"
+              className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 font-semibold text-white hover:bg-primary-medium"
             >
-              <Sparkles size={17} /> Recomendador <ArrowRight size={17} />
+              <Sparkles size={17} /> Recomendador
             </Link>
             <Link
-              to="/biblioteca"
-              className="inline-flex items-center gap-2 rounded-xl border border-border bg-panel px-5 py-3 text-fg hover:border-primary/50"
+              to="/explorar"
+              className="inline-flex items-center gap-2 rounded-md border border-border bg-panel px-5 py-3 text-fg hover:border-primary/50"
             >
-              <Library size={17} /> Biblioteca de arquiteturas
+              <Library size={17} /> Explorar arquiteturas
             </Link>
           </div>
-          <Link
-            to="/manual"
-            className="mt-4 inline-flex items-center gap-2 text-sm text-fg-subtle hover:text-fg-muted"
-          >
-            <BookOpen size={15} /> Ler o manual
-          </Link>
-        </div>
-        <div className="relative rounded-2xl border border-border bg-panel p-6 shadow-xl shadow-black/5">
-          <img
-            src={icons3d.rocket}
-            alt=""
-            className="pointer-events-none absolute -top-7 -right-5 h-20 w-20 rotate-12 drop-shadow-lg"
-          />
-          <div className="flex items-center justify-between text-xs text-fg-subtle">
-            <span>ARQUITETURA EXEMPLO</span>
-            <span className="text-success">validada · 14 set 2026</span>
-          </div>
-          <div className="mt-6 rounded-xl border border-border bg-panel-strong p-5 font-mono text-sm leading-8 text-fg-muted">
-            <p className="text-fg">Application</p>
-            <p>├── app / providers + router</p>
-            <p>├── features / regras de produto</p>
-            <p>├── services / REST boundary</p>
-            <p>└── shared-ui / componentes puros</p>
-          </div>
-          <p className="mt-5 text-sm leading-6 text-fg-muted">
-            Separar responsabilidades não é burocracia: é tornar mudanças locais, testáveis e previsíveis.
-          </p>
         </div>
       </section>
-      <section className="pb-10">
+
+      <Reveal className="grid gap-4 pb-14 md:grid-cols-2">
+        <div className="rounded-xl border border-border bg-panel p-6">
+          <Compass className="text-primary" size={22} />
+          <h2 className="mt-4 font-display text-xl font-bold text-fg">Não sabe qual arquitetura usar?</h2>
+          <p className="mt-2 text-sm leading-6 text-fg-muted">
+            Responda perguntas sobre o seu projeto e o recomendador sugere uma estrutura, com o porquê de cada
+            escolha e o trade-off que ela assume.
+          </p>
+          <Link
+            to="/builder"
+            className="mt-4 inline-block text-sm font-semibold text-primary hover:underline"
+          >
+            usar o recomendador
+          </Link>
+        </div>
+        <div className="rounded-xl border border-border bg-panel p-6">
+          <Library className="text-primary" size={22} />
+          <h2 className="mt-4 font-display text-xl font-bold text-fg">Estude padrões arquiteturais</h2>
+          <p className="mt-2 text-sm leading-6 text-fg-muted">
+            Explore Atomic Design, Feature-Based e Clean Architecture: como cada um organiza pastas, quando
+            vale usar e o que ele assume que você não vai fazer.
+          </p>
+          <Link
+            to="/explorar"
+            className="mt-4 inline-block text-sm font-semibold text-primary hover:underline"
+          >
+            explorar arquiteturas
+          </Link>
+        </div>
+      </Reveal>
+
+      <Reveal className="pb-14" delay={100}>
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
-            <p className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.2em] text-fg-subtle">
-              <Library size={14} /> Biblioteca de arquiteturas
-            </p>
+            <PathLabel segments={['explorar']} />
             <h2 className="mt-2 font-display text-2xl font-bold text-fg">
-              Estude os padrões antes de escolher um
+              Entenda os padrões antes de escolher um
             </h2>
           </div>
-          <Link
-            to="/biblioteca"
-            className="inline-flex items-center gap-1 text-sm text-primary hover:underline"
-          >
-            Ver todos <ArrowRight size={15} />
+          <Link to="/explorar" className="text-sm text-primary hover:underline">
+            ver todos
           </Link>
         </div>
         <div className="mt-6 grid gap-4 md:grid-cols-3">
           {architecturePatterns.map((pattern) => (
-            <Link
-              key={pattern.id}
-              to={`/biblioteca/${pattern.id}`}
-              className="group flex items-start gap-4 rounded-xl border border-border bg-panel p-5 transition hover:border-primary/50 hover:shadow-md hover:shadow-black/5"
-            >
-              <img src={patternIcons[pattern.id]} alt="" className="h-10 w-10 shrink-0" />
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[.14em] text-fg-subtle">
-                  {pattern.shortName}
-                </p>
-                <p className="mt-2 text-sm leading-6 text-fg-muted">{pattern.tagline}</p>
-              </div>
-            </Link>
+            <CardLink key={pattern.id} to={`/explorar/${pattern.id}`}>
+              <WindowFrame
+                title={`${pattern.id}.tsx`}
+                className="h-full transition group-hover:border-primary/50"
+                contentClassName="flex items-start gap-4 p-5"
+              >
+                <img src={patternIcons[pattern.id]} alt="" className="h-10 w-10 shrink-0" />
+                <div>
+                  <p className="font-semibold text-fg">{pattern.shortName}</p>
+                  <p className="mt-2 text-sm leading-6 text-fg-muted">{pattern.tagline}</p>
+                </div>
+              </WindowFrame>
+            </CardLink>
           ))}
         </div>
-      </section>
+      </Reveal>
     </div>
   )
 }
