@@ -50,7 +50,7 @@ export function ArchitectureTree({
           Clique em uma pasta para entender sua responsabilidade. Use a seta para expandir ou recolher o
           conteúdo.
         </p>
-        <div className="rounded-lg border border-[#26262e] bg-[#0b0b0e] p-4 font-mono text-[13px] leading-7 text-[#d6d6dd]">
+        <div className="overflow-x-auto rounded-lg border border-[#26262e] bg-[#0b0b0e] p-3 font-mono text-[13px] leading-7 text-[#d6d6dd] sm:p-4">
           <TreeBranch
             nodes={[tree]}
             level={0}
@@ -98,7 +98,7 @@ function TreeBranch({
   return (
     <ul
       role={level === 0 ? 'tree' : 'group'}
-      className={level > 0 ? 'ml-5 border-l border-[#26262e] pl-3' : ''}
+      className={level > 0 ? 'ml-2 border-l border-[#26262e] pl-2 sm:ml-5 sm:pl-3' : ''}
     >
       {nodes.map((node) => {
         const isFolder = node.kind === 'folder' || node.name.endsWith('/')

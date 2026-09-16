@@ -17,9 +17,9 @@ export function WindowFrame({
 }) {
   return (
     <Component
-      className={`flex flex-col overflow-hidden rounded-xl border border-border bg-panel ${className}`}
+      className={`flex flex-col overflow-hidden rounded-xl border border-border bg-panel/50 backdrop-blur-sm ${className}`}
     >
-      <div className="flex shrink-0 items-center gap-1.5 border-b border-border bg-panel-strong px-4 py-2.5">
+      <div className="flex shrink-0 items-center gap-1.5 border-b border-border bg-panel-strong/50 px-4 py-2.5">
         <Dot color="var(--traffic-red)" />
         <Dot color="var(--traffic-yellow)" />
         <Dot color="var(--traffic-green)" />
