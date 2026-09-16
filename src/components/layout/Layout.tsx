@@ -9,20 +9,14 @@ export function Layout() {
     <div className="min-h-screen text-fg">
       <header className="sticky top-0 z-20 border-b border-border bg-bg/90 px-4 backdrop-blur-xl sm:px-5">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between">
-          <Link
-            to="/"
-            className="flex items-center gap-2.5 whitespace-nowrap font-display text-sm font-bold"
-          >
+          <Link to="/" className="flex items-center gap-2.5 whitespace-nowrap font-display text-sm font-bold">
             Frontend Architect
           </Link>
           <nav className="flex items-center gap-0.5 text-sm text-fg-muted sm:gap-1">
             <Link className="rounded-md px-2 py-2 hover:bg-panel-strong hover:text-fg sm:px-3" to="/">
               Início
             </Link>
-            <Link
-              className="rounded-md px-2 py-2 hover:bg-panel-strong hover:text-fg sm:px-3"
-              to="/explorar"
-            >
+            <Link className="rounded-md px-2 py-2 hover:bg-panel-strong hover:text-fg sm:px-3" to="/explorar">
               Explorar
             </Link>
             <button

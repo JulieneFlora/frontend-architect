@@ -3,7 +3,6 @@ import atomSymbol from './atom-symbol.png'
 import shield from './shield.png'
 import hourglassNotDone from './hourglass-not-done.png'
 import rocket from './rocket.png'
-import sparkles from './sparkles.png'
 import packageBox from './package.png'
 
 export const icons3d = {
@@ -12,6 +11,5 @@ export const icons3d = {
   shield,
   hourglassNotDone,
   rocket,
-  sparkles,
   packageBox,
 }

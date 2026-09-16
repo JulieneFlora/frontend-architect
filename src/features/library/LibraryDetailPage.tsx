@@ -1,9 +1,10 @@
 import { ArrowLeft, Check, CircleX } from 'lucide-react'
 import { Link, Navigate, useParams } from 'react-router'
 import { ArchitectureTree, collectFolderIds } from '../../components/architecture-tree/ArchitectureTree'
-import { CodeBlock } from '../../components/ui/CodeBlock'
 import { PathLabel } from '../../components/ui/PathLabel'
 import { WindowFrame } from '../../components/ui/WindowFrame'
+import { ComposedExampleSection } from './ComposedExampleSection'
+import { CriteriaCard } from './CriteriaCard'
 import { getArchitecturePattern } from './domain'
 import { patternIcons } from './patternIcons'
 
@@ -30,32 +31,18 @@ export function LibraryDetailPage() {
       </p>
 
       <div className="mt-8 grid gap-4 md:grid-cols-2">
-        <WindowFrame>
-          <h2 className="flex items-center gap-2 font-semibold text-fg">
-            <Check size={16} className="text-success" /> Quando usar
-          </h2>
-          <ul className="mt-4 space-y-3 text-sm leading-6 text-fg-muted">
-            {pattern.whenToUse.map((item) => (
-              <li key={item} className="flex gap-2">
-                <span className="mt-1 text-fg-subtle">›</span>
-                {item}
-              </li>
-            ))}
-          </ul>
-        </WindowFrame>
-        <WindowFrame>
-          <h2 className="flex items-center gap-2 font-semibold text-fg">
-            <CircleX size={16} className="text-error" /> Quando evitar
-          </h2>
-          <ul className="mt-4 space-y-3 text-sm leading-6 text-fg-muted">
-            {pattern.avoidWhen.map((item) => (
-              <li key={item} className="flex gap-2">
-                <span className="mt-1 text-fg-subtle">›</span>
-                {item}
-              </li>
-            ))}
-          </ul>
-        </WindowFrame>
+        <CriteriaCard
+          icon={Check}
+          iconClassName="text-success"
+          title="Quando usar"
+          items={pattern.whenToUse}
+        />
+        <CriteriaCard
+          icon={CircleX}
+          iconClassName="text-error"
+          title="Quando evitar"
+          items={pattern.avoidWhen}
+        />
       </div>
 
       <section className="mt-8">
@@ -67,30 +54,7 @@ export function LibraryDetailPage() {
         />
       </section>
 
-      {pattern.example && (
-        <section className="mt-8">
-          <h2 className="font-display text-xl font-semibold text-fg">{pattern.example.title}</h2>
-          <p className="mt-2 max-w-3xl text-sm leading-6 text-fg-muted">{pattern.example.description}</p>
-          <ol className="mt-6 space-y-6">
-            {pattern.example.steps.map((step, index) => (
-              <WindowFrame key={step.file} as="li" title={step.file}>
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <span className="inline-flex items-center gap-2 text-xs font-medium text-fg-subtle">
-                    <span className="grid h-6 w-6 place-items-center rounded-full bg-primary text-[11px] font-bold text-white">
-                      {index + 1}
-                    </span>
-                    {step.level}
-                  </span>
-                </div>
-                <p className="mt-3 text-sm leading-6 text-fg-muted">{step.explanation}</p>
-                <div className="mt-4">
-                  <CodeBlock code={step.code} />
-                </div>
-              </WindowFrame>
-            ))}
-          </ol>
-        </section>
-      )}
+      {pattern.example && <ComposedExampleSection example={pattern.example} />}
 
       <section className="mt-8">
         <h2 className="mb-4 font-display text-xl font-semibold text-fg">Trade-offs</h2>

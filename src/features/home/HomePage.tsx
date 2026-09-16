@@ -1,46 +1,16 @@
-import { ArrowRight, Compass, Library, Sparkles } from 'lucide-react'
+import { ArrowRight, Compass, Library } from 'lucide-react'
 import { Link } from 'react-router'
-import { CardLink } from '../../components/ui/CardLink'
-import { PathLabel } from '../../components/ui/PathLabel'
 import { Reveal } from '../../components/ui/Reveal'
 import { Tooltip } from '../../components/ui/Tooltip'
-import { WindowFrame } from '../../components/ui/WindowFrame'
-import { architecturePatterns } from '../library/domain'
-import { patternIcons } from '../library/patternIcons'
+import { HeroSection } from './HeroSection'
 import { NodeGraph } from './NodeGraph'
+import { PatternPreviewGrid } from './PatternPreviewGrid'
 
 export function HomePage() {
   return (
     <div className="mx-auto max-w-7xl px-5">
       <NodeGraph />
-      <section className="relative z-10 flex min-h-[52vh] flex-col items-center justify-center py-12 text-center lg:min-h-[62vh] lg:py-24">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,var(--bg)_25%,transparent_70%)]" />
-        <div className="relative w-full">
-          <h1 className="font-display text-[clamp(1.5rem,6.5vw,2rem)] font-bold tracking-tight text-fg md:whitespace-nowrap md:text-[clamp(0.65rem,3.4vw,2.25rem)]">
-            Explorando diferentes formas de estruturar um <span className="text-primary">frontend</span>.
-          </h1>
-          <div className="mt-8 flex flex-col items-stretch justify-center gap-3 sm:flex-row sm:flex-wrap sm:items-center">
-            <Tooltip label="Em construção. Volte em breve para usar o recomendador.">
-              <button
-                type="button"
-                aria-disabled="true"
-                className="inline-flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-md bg-primary/50 px-5 py-3 font-semibold text-white/70 sm:w-auto"
-              >
-                <Sparkles size={17} /> Recomendador
-              </button>
-            </Tooltip>
-            <Link
-              to="/explorar"
-              className="inline-flex w-full items-center justify-center gap-2 rounded-md border border-border bg-panel px-5 py-3 text-fg hover:border-primary/50 sm:w-auto"
-            >
-              <Library size={17} /> Explorar arquiteturas
-            </Link>
-          </div>
-          <p className="mt-4 text-xs text-fg-subtle sm:hidden">
-            O recomendador está em construção. Volte em breve.
-          </p>
-        </div>
-      </section>
+      <HeroSection />
 
       <Reveal className="relative z-10 grid gap-4 pb-14 md:grid-cols-2">
         <div className="rounded-xl border border-border bg-panel/50 p-6 backdrop-blur-sm">
@@ -81,34 +51,7 @@ export function HomePage() {
       </Reveal>
 
       <Reveal className="relative z-10 pb-14" delay={100}>
-        <div className="flex flex-wrap items-end justify-between gap-3">
-          <div>
-            <PathLabel segments={['explorar']} />
-            <h2 className="mt-2 font-display text-2xl font-bold text-fg">
-              Entenda os padrões antes de escolher um
-            </h2>
-          </div>
-          <Link to="/explorar" className="text-sm text-primary hover:underline">
-            ver todos
-          </Link>
-        </div>
-        <div className="mt-6 grid gap-4 md:grid-cols-3">
-          {architecturePatterns.map((pattern) => (
-            <CardLink key={pattern.id} to={`/explorar/${pattern.id}`}>
-              <WindowFrame
-                title={`${pattern.id}.tsx`}
-                className="h-full"
-                contentClassName="flex items-start gap-4 p-5"
-              >
-                <img src={patternIcons[pattern.id]} alt="" className="h-10 w-10 shrink-0" />
-                <div>
-                  <p className="font-semibold text-fg">{pattern.shortName}</p>
-                  <p className="mt-2 text-sm leading-6 text-fg-muted">{pattern.tagline}</p>
-                </div>
-              </WindowFrame>
-            </CardLink>
-          ))}
-        </div>
+        <PatternPreviewGrid />
       </Reveal>
     </div>
   )

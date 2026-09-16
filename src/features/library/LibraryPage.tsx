@@ -19,11 +19,7 @@ export function LibraryPage() {
       <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
         {architecturePatterns.map((pattern) => (
           <CardLink key={pattern.id} to={`/explorar/${pattern.id}`} className="h-full">
-            <WindowFrame
-              title={`${pattern.id}.tsx`}
-              className="h-full"
-              contentClassName="flex flex-col p-6"
-            >
+            <WindowFrame title={`${pattern.id}.tsx`} className="h-full" contentClassName="flex flex-col p-6">
               <img src={patternIcons[pattern.id]} alt="" className="h-12 w-12" />
               <h2 className="mt-4 text-lg font-semibold text-fg">{pattern.name}</h2>
               <p className="mt-3 flex-1 text-sm leading-6 text-fg-muted">{pattern.tagline}</p>

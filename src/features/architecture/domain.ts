@@ -24,16 +24,12 @@ export const defaults: ArchitectureChoices = {
 }
 export type ModuleInfo = {
   id: string
-  label: string
-  shortLabel: string
-  category: 'foundation' | 'experience' | 'domain' | 'data' | 'shared'
   responsibility: string
   keep: string
   avoid: string
   alternative: string
   contents: string[]
   examples: string[]
-  dependsOn: string[]
 }
 export type Recommendation = {
   title: string
