@@ -1,11 +1,7 @@
 import { type MouseEvent, type ReactNode, useState } from 'react'
 import { useNavigate } from 'react-router'
 
-/**
- * Link de cartão com uma animação de "levantar e ir": ao clicar, o card
- * sobe suavemente antes de navegar, em vez de trocar de tela na hora.
- * Preserva Ctrl/Cmd/Shift/clique do meio para abrir em nova aba.
- */
+// Preserva Ctrl/Cmd/Shift/clique do meio para abrir em nova aba.
 export function CardLink({
   to,
   className = '',

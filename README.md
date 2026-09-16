@@ -1,53 +1,49 @@
 # Frontend Architect
 
-Uma plataforma interativa para transformar escolhas técnicas em recomendações de arquitetura frontend explicáveis, versionadas e preparadas para evolução.
+Projeto de estudos sobre padrões de arquitetura frontend. A ideia é explorar, na prática, como diferentes formas de organizar uma aplicação React se comportam: o que cada padrão resolve, o que ele assume que você não vai fazer, e os trade offs de cada escolha.
 
-## O que a V1 entrega
+Não é uma ferramenta pronta para produção nem um produto acabado. É um espaço pessoal para estudar o assunto construindo interfaces, comparando padrões e testando ideias.
 
-- fluxo guiado para tipo de produto e tecnologias;
-- motor de recomendação isolado e testável;
-- diagrama interativo de responsabilidades;
-- árvore de diretórios copiável;
-- recomendações, alternativas e trade-offs;
-- manual dentro da aplicação e documentação em `docs/`;
-- testes de regras e de fluxo de interface.
+## O que tem aqui
+
+- **Biblioteca de padrões**: três arquiteturas explicadas lado a lado (Feature Based, Atomic Design e Clean Architecture em camadas). Cada uma mostra quando usar, quando evitar, a árvore de pastas correspondente e os trade offs envolvidos.
+- **Explorador de árvore interativo**: clique em uma pasta da estrutura para ver a responsabilidade dela dentro da arquitetura escolhida.
+- **Recomendador**: um fluxo guiado por perguntas sobre o projeto para sugerir uma estrutura. Ainda em construção, as regras por trás das sugestões seguem sendo ajustadas.
 
 ## Stack
 
-React, TypeScript strict, Vite, Tailwind CSS, React Router, TanStack Query, React Hook Form, Zod, Vitest e React Testing Library. Consulte as [versões validadas](docs/versions.md).
+React, TypeScript, Vite, Tailwind CSS e React Router.
 
-## Arquitetura
-
-O código é organizado para preservar fronteiras claras:
+## Estrutura do código
 
 ```text
 src/
-├── app/                 # router e providers
-├── components/layout/   # composição visual global
+├── app/            # router e providers
+├── components/     # UI compartilhada e o explorador de árvore
 ├── features/
-│   ├── architecture/    # fluxo, domínio e motor puro
+│   ├── architecture/  # fluxo do recomendador
 │   ├── home/
-│   └── manual/
+│   └── library/       # catálogo de padrões arquiteturais
 └── test/
 ```
 
-O motor de recomendações é independente de React e fica em `features/architecture/recommendationEngine.ts`. Isso permite evoluir catálogo, versões e regras sem espalhar condicionais por componentes. Veja [architecture.md](docs/architecture.md) e [decisions.md](docs/decisions.md).
+## Licença
 
-## Executar
+MIT. Veja [LICENSE](LICENSE).
 
-Requer Node.js 22.x (veja `.nvmrc`).
+## Como rodar
+
+Requer Node.js 22 (veja `.nvmrc`).
 
 ```bash
 npm install
 npm run dev
-npm run test
-npm run build
 ```
 
-## Limitações conhecidas
+Outros comandos úteis:
 
-Esta é intencionalmente uma V1 sem persistência, autenticação, backend ou geração de projetos. A interface mostra uma recomendação inicial baseada em regras determinísticas; ela não substitui a análise do contexto do time.
-
-## Roadmap e contribuição
-
-As funcionalidades futuras estão em [roadmap.md](docs/roadmap.md). Para adicionar uma tecnologia: registre versão e compatibilidade, amplie o catálogo e o motor, escreva testes de regra e atualize a documentação. O [manual](docs/manual.md) detalha o processo.
+```bash
+npm run test    # roda os testes
+npm run lint    # checa o código
+npm run build   # build de produção
+```

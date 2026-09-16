@@ -1,14 +1,7 @@
 import type { ElementType, ReactNode } from 'react'
 
-/**
- * O bloco de construção visual do projeto: uma janela no espírito macOS,
- * com as três bolinhas (vermelha/amarela/verde) na barra de título. É a
- * assinatura visual do site — usada em todo painel de conteúdo relevante.
- *
- * A raiz é flex-col: a barra de título tem altura fixa e o conteúdo ocupa
- * o espaço restante (flex-1). Isso evita que um `h-full` no conteúdo some
- * com a altura da barra de título e vaze pra fora do card.
- */
+// flex-col: a barra de título tem altura fixa e o conteúdo ocupa o espaço
+// restante (flex-1), então um `h-full` no conteúdo não vaza pra fora do card.
 export function WindowFrame({
   as: Component = 'div',
   title,

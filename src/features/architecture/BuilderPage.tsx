@@ -24,6 +24,18 @@ const labels: Record<ChoiceKey, string> = {
   styling: 'Estilização',
   tests: 'Testes',
 }
+function WipNotice() {
+  return (
+    <div className="mt-6 flex items-start gap-3 rounded-xl border border-warning/30 bg-warning-light p-4">
+      <img src={icons3d.hourglassNotDone} alt="" className="h-9 w-9 shrink-0" />
+      <p className="text-sm leading-6 text-fg-muted">
+        <strong className="text-fg">Ainda em construção:</strong> o recomendador já funciona, mas as regras
+        por trás das sugestões ainda estão sendo ajustadas. Sinta-se à vontade para explorar, só não leve
+        o resultado como palavra final por enquanto.
+      </p>
+    </div>
+  )
+}
 export function BuilderPage() {
   const [step, setStep] = useState(0)
   const [choices, setChoices] = useState<ArchitectureChoices>(defaults)
@@ -66,7 +78,8 @@ export function BuilderPage() {
             <RotateCcw size={15} /> revisar escolhas
           </button>
         </div>
-        <div className="mb-6 flex flex-wrap gap-2">
+        <WipNotice />
+        <div className="mt-6 mb-6 flex flex-wrap gap-2">
           {Object.entries(choices).map(([key, value]) => (
             <span
               className="rounded-full border border-border bg-panel px-3 py-1 text-xs text-fg-muted"
@@ -133,6 +146,7 @@ export function BuilderPage() {
       <p className="mt-2 text-fg-muted">
         Etapa {step + 1} de 2. Suas escolhas alimentam regras de recomendação testáveis.
       </p>
+      {step === 0 && <WipNotice />}
       <div className="mt-8 h-1 overflow-hidden rounded-full bg-border">
         <div className="h-full bg-primary transition-all" style={{ width: `${(step + 1) * 50}%` }} />
       </div>

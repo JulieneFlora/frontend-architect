@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 
-/** Revela o conteúdo com um fade + slide-up suave quando entra na viewport. */
 export function Reveal({
   children,
   className = '',

@@ -1,6 +1,7 @@
 import { Outlet, Link, useLocation } from 'react-router'
 import { Moon, Sparkles, Sun } from 'lucide-react'
 import { useTheme } from '../../app/theme/ThemeProvider'
+import { Tooltip } from '../ui/Tooltip'
 export function Layout() {
   const location = useLocation()
   const { theme, toggleTheme } = useTheme()
@@ -9,13 +10,6 @@ export function Layout() {
       <header className="sticky top-0 z-20 border-b border-border bg-bg/90 px-5 backdrop-blur-xl">
         <div className="mx-auto flex h-16 max-w-7xl items-center justify-between">
           <Link to="/" className="flex items-center gap-2.5 font-display text-sm font-bold">
-            <span className="flex h-8 w-11 flex-col items-start gap-1 rounded-md border border-border bg-panel-strong px-2 pt-1.5">
-              <span className="flex gap-1">
-                <span className="h-1.5 w-1.5 rounded-full" style={{ background: 'var(--traffic-red)' }} />
-                <span className="h-1.5 w-1.5 rounded-full" style={{ background: 'var(--traffic-yellow)' }} />
-                <span className="h-1.5 w-1.5 rounded-full" style={{ background: 'var(--traffic-green)' }} />
-              </span>
-            </span>
             Frontend Architect
           </Link>
           <nav className="flex items-center gap-1 text-sm text-fg-muted">
@@ -34,12 +28,15 @@ export function Layout() {
               {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
             </button>
             {location.pathname !== '/builder' && (
-              <Link
-                to="/builder"
-                className="ml-1 inline-flex items-center gap-2 rounded-md bg-primary px-3 py-2 font-semibold text-white hover:bg-primary-medium"
-              >
-                <Sparkles size={15} /> Recomendador
-              </Link>
+              <Tooltip label="Em construção. Volte em breve para usar o recomendador." position="bottom">
+                <button
+                  type="button"
+                  aria-disabled="true"
+                  className="ml-1 inline-flex cursor-not-allowed items-center gap-2 rounded-md bg-primary/50 px-3 py-2 font-semibold text-white/70"
+                >
+                  <Sparkles size={15} /> Recomendador
+                </button>
+              </Tooltip>
             )}
           </nav>
         </div>
@@ -49,8 +46,8 @@ export function Layout() {
       </main>
       <footer className="mx-auto max-w-7xl px-5 py-9">
         <div className="flex flex-wrap items-center justify-between gap-2 border-t border-border pt-5 font-mono text-[11px] text-fg-subtle">
-          <span>frontend-architect — recomendações versionadas, não verdades universais</span>
-          <span>feito com carinho por juliene &lt;3</span>
+          <span>frontend-architect: recomendações, não verdades universais</span>
+          <span>feito com carinho por juliene ❤️</span>
         </div>
       </footer>
     </div>

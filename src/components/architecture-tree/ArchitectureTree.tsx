@@ -28,7 +28,7 @@ export function ArchitectureTree({
   const [expanded, setExpanded] = useState<Record<string, boolean>>(
     Object.fromEntries((defaultExpanded ?? [tree.id]).map((id) => [id, true])),
   )
-  const initialNode = initialSelectedId ? findNode(tree, initialSelectedId) : tree
+  const initialNode = initialSelectedId ? findNode(tree, initialSelectedId) : (tree.children?.[0] ?? tree)
   const [selected, setSelected] = useState<SelectedNode>({
     label: initialNode?.name ?? tree.name,
     description: initialNode?.description ?? 'Selecione um item para ver detalhes.',
@@ -44,7 +44,12 @@ export function ArchitectureTree({
 
   return (
     <section className="grid gap-5 xl:grid-cols-[minmax(0,1.25fr)_minmax(320px,.75fr)]">
-      <WindowFrame title="navegador de arquitetura">
+      <WindowFrame>
+        <p className="mb-4 flex items-start gap-2 text-xs leading-5 text-fg-subtle">
+          <Info size={15} className="mt-0.5 shrink-0 text-fg-subtle" />
+          Clique em uma pasta para entender sua responsabilidade. Use a seta para expandir ou recolher o
+          conteúdo.
+        </p>
         <div className="rounded-lg border border-[#26262e] bg-[#0b0b0e] p-4 font-mono text-[13px] leading-7 text-[#d6d6dd]">
           <TreeBranch
             nodes={[tree]}
@@ -55,11 +60,6 @@ export function ArchitectureTree({
             selected={selected.label}
           />
         </div>
-        <p className="mt-4 flex items-start gap-2 text-xs leading-5 text-fg-subtle">
-          <Info size={15} className="mt-0.5 shrink-0 text-fg-subtle" />
-          Clique em uma pasta para entender sua responsabilidade. Use a seta para expandir ou recolher o
-          conteúdo.
-        </p>
       </WindowFrame>
       <ArchitectureInspector selected={selected} />
     </section>
@@ -174,7 +174,7 @@ function ArchitectureInspector({ selected }: { selected: SelectedNode }) {
         {selected.label}
       </p>
       <p className="mt-4 text-sm leading-6 text-fg-muted">{module?.responsibility ?? selected.description}</p>
-      {module ? (
+      {module && (
         <>
           <InspectorSection icon={FolderOpen} title="O que deve existir aqui" items={module.contents} />
           <InspectorSection icon={Info} title="Responsabilidades" items={module.examples} />
@@ -184,11 +184,6 @@ function ArchitectureInspector({ selected }: { selected: SelectedNode }) {
             <Rule title="Alternativa" text={module.alternative} />
           </div>
         </>
-      ) : (
-        <div className="mt-6 border-t border-border pt-5">
-          <p className="text-sm font-semibold text-fg">Papel na estrutura</p>
-          <p className="mt-2 text-sm leading-6 text-fg-muted">{selected.description}</p>
-        </div>
       )}
     </WindowFrame>
   )

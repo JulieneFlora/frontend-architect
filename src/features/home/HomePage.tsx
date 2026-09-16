@@ -1,8 +1,9 @@
-import { Compass, Library, Sparkles } from 'lucide-react'
+import { ArrowRight, Compass, Library, Sparkles } from 'lucide-react'
 import { Link } from 'react-router'
 import { CardLink } from '../../components/ui/CardLink'
 import { PathLabel } from '../../components/ui/PathLabel'
 import { Reveal } from '../../components/ui/Reveal'
+import { Tooltip } from '../../components/ui/Tooltip'
 import { WindowFrame } from '../../components/ui/WindowFrame'
 import { architecturePatterns } from '../library/domain'
 import { patternIcons } from '../library/patternIcons'
@@ -11,20 +12,23 @@ import { NodeGraph } from './NodeGraph'
 export function HomePage() {
   return (
     <div className="mx-auto max-w-7xl px-5">
-      <section className="relative min-h-[62vh] overflow-hidden py-16 lg:py-24">
+      <section className="relative flex min-h-[62vh] flex-col items-center justify-center overflow-hidden py-16 text-center lg:py-24">
         <NodeGraph />
-        <div className="via-bg/95 absolute inset-0 bg-gradient-to-r from-bg to-transparent lg:w-2/3" />
-        <div className="relative">
-          <h1 className="max-w-lg font-display text-4xl font-bold tracking-tight text-fg">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,var(--bg)_45%,transparent_85%)]" />
+        <div className="relative w-full">
+          <h1 className="whitespace-nowrap font-display text-[clamp(0.65rem,3.4vw,2.25rem)] font-bold tracking-tight text-fg">
             Projete um frontend que <span className="text-primary">continua claro</span>.
           </h1>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <Link
-              to="/builder"
-              className="inline-flex items-center gap-2 rounded-md bg-primary px-5 py-3 font-semibold text-white hover:bg-primary-medium"
-            >
-              <Sparkles size={17} /> Recomendador
-            </Link>
+          <div className="mt-8 flex flex-wrap justify-center gap-3">
+            <Tooltip label="Em construção. Volte em breve para usar o recomendador.">
+              <button
+                type="button"
+                aria-disabled="true"
+                className="inline-flex cursor-not-allowed items-center gap-2 rounded-md bg-primary/50 px-5 py-3 font-semibold text-white/70"
+              >
+                <Sparkles size={17} /> Recomendador
+              </button>
+            </Tooltip>
             <Link
               to="/explorar"
               className="inline-flex items-center gap-2 rounded-md border border-border bg-panel px-5 py-3 text-fg hover:border-primary/50"
@@ -43,12 +47,14 @@ export function HomePage() {
             Responda perguntas sobre o seu projeto e o recomendador sugere uma estrutura, com o porquê de cada
             escolha e o trade-off que ela assume.
           </p>
-          <Link
-            to="/builder"
-            className="mt-4 inline-block text-sm font-semibold text-primary hover:underline"
-          >
-            usar o recomendador
-          </Link>
+          <Tooltip label="Em construção. Volte em breve para usar o recomendador.">
+            <span
+              aria-disabled="true"
+              className="mt-4 inline-flex cursor-not-allowed items-center gap-1 text-sm font-semibold text-fg-subtle"
+            >
+              usar o recomendador
+            </span>
+          </Tooltip>
         </div>
         <div className="rounded-xl border border-border bg-panel p-6">
           <Library className="text-primary" size={22} />
@@ -59,9 +65,13 @@ export function HomePage() {
           </p>
           <Link
             to="/explorar"
-            className="mt-4 inline-block text-sm font-semibold text-primary hover:underline"
+            className="group mt-4 inline-flex items-center gap-1 text-sm font-semibold text-primary hover:underline"
           >
             explorar arquiteturas
+            <ArrowRight
+              size={14}
+              className="-translate-x-1 opacity-0 transition-all group-hover:translate-x-0 group-hover:opacity-100"
+            />
           </Link>
         </div>
       </Reveal>
@@ -83,7 +93,7 @@ export function HomePage() {
             <CardLink key={pattern.id} to={`/explorar/${pattern.id}`}>
               <WindowFrame
                 title={`${pattern.id}.tsx`}
-                className="h-full transition group-hover:border-primary/50"
+                className="h-full"
                 contentClassName="flex items-start gap-4 p-5"
               >
                 <img src={patternIcons[pattern.id]} alt="" className="h-10 w-10 shrink-0" />

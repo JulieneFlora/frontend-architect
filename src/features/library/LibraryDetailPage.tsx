@@ -30,7 +30,7 @@ export function LibraryDetailPage() {
       </p>
 
       <div className="mt-8 grid gap-4 md:grid-cols-2">
-        <WindowFrame title="quando-usar.md">
+        <WindowFrame>
           <h2 className="flex items-center gap-2 font-semibold text-fg">
             <Check size={16} className="text-success" /> Quando usar
           </h2>
@@ -43,7 +43,7 @@ export function LibraryDetailPage() {
             ))}
           </ul>
         </WindowFrame>
-        <WindowFrame title="quando-evitar.md">
+        <WindowFrame>
           <h2 className="flex items-center gap-2 font-semibold text-fg">
             <CircleX size={16} className="text-error" /> Quando evitar
           </h2>

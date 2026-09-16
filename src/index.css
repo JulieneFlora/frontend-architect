@@ -2,12 +2,6 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/*
-  Direção visual: janela de app / editor de código, no espírito macOS.
-  As três bolinhas (vermelha/amarela/verde) do WindowFrame são a assinatura
-  visual do produto — aparecem em todo painel de conteúdo relevante.
-*/
-
 :root {
   --bg: #f2f2f5;
   --panel: #ffffff;

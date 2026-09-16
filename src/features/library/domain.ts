@@ -223,7 +223,7 @@ const featureBased: ArchitecturePattern = {
       responsibility: 'Agrupam UI, hooks e regras de uma capacidade específica do produto.',
       keep: 'Componentes, hooks, schemas e chamadas de API específicos da feature.',
       avoid:
-        'Componentes genéricos demais para viverem só aqui — isso é sinal de que devem subir para shared.',
+        'Componentes genéricos demais para viverem só aqui: isso é sinal de que devem subir para shared.',
       alternative: 'Domínios mais ricos (DDD) em produtos com regras de negócio complexas.',
       contents: ['orders/components/', 'orders/hooks/', 'orders/api/', 'users/components/'],
       examples: ['Criar pedido', 'Filtrar usuários por status', 'Aplicar permissão de edição'],
@@ -262,7 +262,7 @@ const featureBased: ArchitecturePattern = {
       category: 'data',
       responsibility: 'Fronteira de I/O com a API: clientes HTTP, DTOs e normalização de erros.',
       keep: 'Clientes HTTP, mapeamento de DTO para modelo de UI.',
-      avoid: 'Estado de interface ou cache — isso é responsabilidade dos query hooks.',
+      avoid: 'Estado de interface ou cache: isso é responsabilidade dos query hooks.',
       alternative: 'BFF ou SDK gerado a partir de um contrato OpenAPI.',
       contents: ['httpClient.ts', 'apiError.ts'],
       examples: ['Normalizar erros HTTP', 'Configurar base URL e headers'],
@@ -279,14 +279,14 @@ const atomicDesign: ArchitecturePattern = {
   origin:
     'Criado por Brad Frost em 2013 como metodologia para sistemas de design, adaptado depois para estrutura de pastas em projetos React, Vue e afins.',
   summary:
-    'A interface é decomposta em cinco níveis — átomos, moléculas, organismos, templates e páginas — onde cada nível é construído combinando o anterior. É uma arquitetura focada em componentes visuais e no vocabulário de um design system, não em regras de negócio.',
+    'A interface é decomposta em cinco níveis (átomos, moléculas, organismos, templates e páginas), onde cada nível é construído combinando o anterior. É uma arquitetura focada em componentes visuais e no vocabulário de um design system, não em regras de negócio.',
   whenToUse: [
     'Produtos com um design system próprio ou a intenção de construir um, onde consistência visual é prioridade.',
     'Times com designers e desenvolvedores colaborando com uma linguagem visual compartilhada.',
     'Bibliotecas de componentes que serão publicadas e reusadas em múltiplos produtos.',
   ],
   avoidWhen: [
-    'Aplicações com lógica de negócio complexa — Atomic Design não diz nada sobre onde colocar regras de domínio, então costuma ser combinado com outra arquitetura para isso.',
+    'Aplicações com lógica de negócio complexa: Atomic Design não diz nada sobre onde colocar regras de domínio, então costuma ser combinado com outra arquitetura para isso.',
     'Times pequenos sem preocupação com design system, onde a categorização em 5 níveis vira burocracia.',
   ],
   tradeoffs: [
@@ -420,7 +420,7 @@ const atomicDesign: ArchitecturePattern = {
       category: 'shared',
       responsibility:
         'Menores blocos de UI: não podem ser quebrados em partes menores sem deixar de ter função.',
-      keep: 'Botões, inputs, labels, ícones — cada um com uma única responsabilidade visual.',
+      keep: 'Botões, inputs, labels, ícones, cada um com uma única responsabilidade visual.',
       avoid: 'Qualquer composição de mais de um elemento ou lógica de negócio.',
       alternative: 'Importar de uma biblioteca de UI headless (Radix, Ark UI) e estilizar por cima.',
       contents: ['Button.tsx', 'Input.tsx', 'Icon.tsx', 'Badge.tsx'],
@@ -447,7 +447,7 @@ const atomicDesign: ArchitecturePattern = {
       category: 'experience',
       responsibility: 'Seções complexas e reconhecíveis da interface, muitas vezes já conectadas a dados.',
       keep: 'Cabeçalhos, tabelas completas, formulários inteiros.',
-      avoid: 'Regras de roteamento — isso é responsabilidade da página.',
+      avoid: 'Regras de roteamento: isso é responsabilidade da página.',
       alternative: 'Dividir um organismo grande demais em organismos menores e mais focados.',
       contents: ['SiteHeader.tsx', 'UserTable.tsx', 'CheckoutForm.tsx'],
       examples: ['Tabela com paginação', 'Formulário com múltiplos campos e submissão'],
@@ -458,7 +458,7 @@ const atomicDesign: ArchitecturePattern = {
       label: 'Templates',
       shortLabel: 'Esqueleto de layout',
       category: 'experience',
-      responsibility: 'Definem a disposição de organismos na página, sem dados reais — só a estrutura.',
+      responsibility: 'Definem a disposição de organismos na página, sem dados reais, só a estrutura.',
       keep: 'Grid de layout, posicionamento de header/sidebar/conteúdo.',
       avoid: 'Buscar dados ou conhecer a origem do conteúdo que vai preenchê-los.',
       alternative:
@@ -474,7 +474,7 @@ const atomicDesign: ArchitecturePattern = {
       category: 'domain',
       responsibility: 'Preenchem um template com dados reais, conectando à API e ao estado da aplicação.',
       keep: 'Busca de dados, roteamento e composição final da tela.',
-      avoid: 'Definir a estrutura visual do zero — isso é papel do template.',
+      avoid: 'Definir a estrutura visual do zero: isso é papel do template.',
       alternative: 'Route modules do framework de roteamento, se ele suportar loaders.',
       contents: ['DashboardPage.tsx', 'LoginPage.tsx'],
       examples: ['Buscar dados do usuário logado', 'Passar dados reais para o template'],
@@ -484,7 +484,7 @@ const atomicDesign: ArchitecturePattern = {
   example: {
     title: 'Construindo uma tela de login, nível por nível',
     description:
-      'O mesmo pedaço de interface passa pelos cinco níveis: primeiro os elementos indivisíveis, depois composições cada vez maiores, até virar uma página real conectada a dados. Repare que cada nível só importa do nível imediatamente abaixo — um organismo nunca importa outro organismo, e um átomo nunca sabe que existe um formulário de login.',
+      'O mesmo pedaço de interface passa pelos cinco níveis: primeiro os elementos indivisíveis, depois composições cada vez maiores, até virar uma página real conectada a dados. Repare que cada nível só importa do nível imediatamente abaixo: um organismo nunca importa outro organismo, e um átomo nunca sabe que existe um formulário de login.',
     steps: [
       {
         level: '1. Átomo',
@@ -547,7 +547,7 @@ export function LoginForm({ onSubmit }: { onSubmit: (email: string, password: st
         level: '4. Template',
         file: 'templates/AuthTemplate.tsx',
         explanation:
-          'Define onde o organismo fica na tela — centralizado, com uma coluna de branding ao lado — sem receber dados reais. O mesmo template serve para login, cadastro ou recuperação de senha, cada um passando um organismo diferente por children.',
+          'Define onde o organismo fica na tela (centralizado, com uma coluna de branding ao lado), sem receber dados reais. O mesmo template serve para login, cadastro ou recuperação de senha, cada um passando um organismo diferente por children.',
         code: `export function AuthTemplate({ children }: { children: React.ReactNode }) {
   return (
     <div className="grid min-h-screen lg:grid-cols-2">
@@ -590,7 +590,7 @@ const layeredClean: ArchitecturePattern = {
   shortName: 'Clean Architecture',
   tagline: 'Camadas concêntricas onde as dependências sempre apontam para dentro, em direção ao domínio.',
   origin:
-    'Inspirada na Clean Architecture de Robert C. Martin (2012) e em arquiteturas hexagonais, adaptada para frontends com lógica de negócio relevante — casos como apps financeiros, de saúde ou com regras complexas de cálculo.',
+    'Inspirada na Clean Architecture de Robert C. Martin (2012) e em arquiteturas hexagonais, adaptada para frontends com lógica de negócio relevante: casos como apps financeiros, de saúde ou com regras complexas de cálculo.',
   summary:
     'A aplicação é dividida em camadas concêntricas: domínio no centro (entidades e regras de negócio puras), aplicação ao redor (casos de uso que orquestram o domínio), e apresentação e infraestrutura nas bordas (UI e detalhes técnicos como HTTP e storage). A regra central é que camadas internas nunca conhecem as externas.',
   whenToUse: [
@@ -599,7 +599,7 @@ const layeredClean: ArchitecturePattern = {
     'Times que precisam trocar peças de infraestrutura (ex: outro provedor de API) sem tocar nas regras de negócio.',
   ],
   avoidWhen: [
-    'CRUDs simples sem lógica de negócio real — a separação em camadas vira burocracia sem ganho.',
+    'CRUDs simples sem lógica de negócio real: a separação em camadas vira burocracia sem ganho.',
     'Times pequenos ou protótipos, onde o custo de indireção supera o benefício de isolamento.',
   ],
   tradeoffs: [
@@ -609,7 +609,7 @@ const layeredClean: ArchitecturePattern = {
     },
     {
       title: 'Trocar infraestrutura fica barato',
-      body: 'Migrar de REST para GraphQL, ou trocar o provedor de autenticação, afeta só a camada de infraestrutura — domínio e aplicação não mudam.',
+      body: 'Migrar de REST para GraphQL, ou trocar o provedor de autenticação, afeta só a camada de infraestrutura: domínio e aplicação não mudam.',
     },
     {
       title: 'Mais indireção e boilerplate',
@@ -734,7 +734,7 @@ const layeredClean: ArchitecturePattern = {
         'Núcleo da aplicação: entidades, invariantes e regras de negócio, sem depender de nada externo.',
       keep: 'Classes/funções puras de negócio e as interfaces que a infraestrutura precisa implementar.',
       avoid:
-        'Qualquer import de React, HTTP client ou biblioteca de UI — o domínio não pode depender de detalhes.',
+        'Qualquer import de React, HTTP client ou biblioteca de UI: o domínio não pode depender de detalhes.',
       alternative:
         'Modelagem mais simples com tipos e funções, sem entidades ricas, se as regras forem poucas.',
       contents: ['entities/Order.ts', 'services/pricing.ts', 'repositories.ts'],
@@ -749,7 +749,7 @@ const layeredClean: ArchitecturePattern = {
       responsibility:
         'Implementações concretas dos contratos definidos pelo domínio: HTTP, storage, terceiros.',
       keep: 'Implementações de repositório, clientes HTTP, adaptadores de serviços externos.',
-      avoid: 'Regra de negócio — a infraestrutura só traduz dados entre o mundo externo e o domínio.',
+      avoid: 'Regra de negócio: a infraestrutura só traduz dados entre o mundo externo e o domínio.',
       alternative: 'SDK gerado a partir de um contrato OpenAPI para reduzir boilerplate de cliente HTTP.',
       contents: ['HttpOrderRepository.ts', 'httpClient.ts'],
       examples: ['Implementar OrderRepository usando fetch', 'Mapear DTO da API para a entidade Order'],

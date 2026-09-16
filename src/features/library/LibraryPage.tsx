@@ -13,7 +13,7 @@ export function LibraryPage() {
       <p className="mt-2 max-w-2xl text-fg-muted">
         Estude padrões conhecidos do ecossistema, um de cada vez: como cada um organiza pastas e
         responsabilidades, quando vale usar e quais trade-offs ele assume. Diferente do recomendador, aqui
-        você não recebe uma sugestão para o seu projeto — você explora o padrão para entender como ele
+        você não recebe uma sugestão para o seu projeto, você explora o padrão para entender como ele
         funciona.
       </p>
       <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
@@ -21,7 +21,7 @@ export function LibraryPage() {
           <CardLink key={pattern.id} to={`/explorar/${pattern.id}`} className="h-full">
             <WindowFrame
               title={`${pattern.id}.tsx`}
-              className="h-full transition group-hover:border-primary/50"
+              className="h-full"
               contentClassName="flex flex-col p-6"
             >
               <img src={patternIcons[pattern.id]} alt="" className="h-12 w-12" />

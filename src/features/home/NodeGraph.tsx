@@ -62,11 +62,6 @@ for (const node of nodes) {
 const edges = [...edgeSet.values()]
 const signalEdges = edges.filter((_, index) => index % 4 === 0).slice(0, 6)
 
-/**
- * Fundo ambiente contínuo: uma malha de nós que nunca para de se mover,
- * com sinais viajando entre alguns pontos — um sistema vivo, sempre em
- * evolução, discreto o bastante para não competir com o conteúdo.
- */
 export function NodeGraph() {
   return (
     <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden opacity-[0.55]">
